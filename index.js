@@ -63,19 +63,111 @@ object[Symbol.iterator] = function* () {
 //     yield Object.keys(this)
 // }
 
-console.log([...object])
+// console.log([...object])
 
-console.log(Object.keys(object))
+// console.log(Object.keys(object))
 
-const emojis = ['#', '!']
+// const emojis = ['#', '!']
 
-function* genFunc1(){
-    yield 'Å'
-    yield* emojis
-    yield 'Ê'
+// function* genFunc1(){
+//     yield 'Å'
+//     yield* emojis
+//     yield 'Ê'
+// }
+
+// const genObj = genFunc1()
+
+
+// console.log(...genObj)
+
+
+function* generatorFunction1(){
+    const second = yield 'First!'
+    console.log(second)
+    return 'All Done!'
+}
+const genObj = generatorFunction1()
+
+console.log(genObj.next())
+console.log(genObj.next())
+
+
+// function* getLargeNumber(){
+//     let number = 0
+//     while (true){
+//         yield getLargeNumber(10, number)
+//         number++
+//     }
+// }
+
+// const it = getLargeNumber()
+// console.log(it.next().value)
+// console.log(it.next().value)
+
+
+const bookClubs = [
+    {
+        name: "The Cool Club",
+        clubMembers: [
+            {
+            name: "John Doe",
+            books: [
+                {id: 'hs891', title: 'A Perfect Book'},
+                {id: 'ey812', title: 'A Good Book'}
+            ]
+            }
+        ],
+        
+    },
+    {
+        name: 'The Better Club',
+        clubMembers: [
+            {
+                name: 'Jane Doe',
+                books: [
+                    {id: 'u8291', title: 'A Great Book'},
+                    {id: 'p9201', title: 'A Nice Book'}
+                ]
+            }
+        ]
+    }
+]
+
+function* iterateBooks(books){
+    for (let i=0; i < books.length; i++){
+        yield books[i]
+    }
 }
 
-const genObj = genFunc1()
+function* iterateMembers(members){
+    for (let i = 0; i < members.length; i++) {
+        const clubMember = members[i]
+        yield* iterateBooks(clubMember.books)
+    }
+}
 
+function* iterateBookClubs(bookClubs){
+    for (let i = 0; i < bookClubs.length; i++){
+        const bookClub = bookClubs[i]
+        yield* iterateMembers(bookClub.clubMembers)
+    }
+}
 
-console.log(...genObj)
+const it = iterateBookClubs(bookClubs)
+
+console.log(...it)
+
+function findBook(id){
+    const genObj = iterateBookClubs(bookClubs)
+    let result = genObj.next()
+
+    while (!result.done) {
+        if (result.value.id === id) {
+            return result.value
+        } else {
+            result = genObj.next()
+        }
+    }
+}
+
+console.log(findBook('ey812'))
