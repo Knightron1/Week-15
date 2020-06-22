@@ -17,3 +17,48 @@ function* genFunc(){
 }
 
 console.log(genFunc());
+
+const genObj = genFunc()
+
+console.log(genObj.next())
+console.log(genObj.next())
+console.log(genObj.next())
+console.log(genObj.next())
+
+function* getSpread(){
+    yield "Twon"
+    yield "Too"
+    yield 'Free'
+}
+
+const getObj = getSpread()
+
+for (let item of getObj) {
+    console.log(item)
+}
+
+
+const array = ['$', '&', '@']
+const string = 'I love Javascript!'
+const object =  {name: "Lydia Hallie"}
+function regularFunction(){
+    return 'I am a regular function'
+} 
+function* generatorFunction(){
+    return 'I am a generator function'
+}
+const generatorObject = generatorFunction()
+
+array[Symbol.iterator]
+
+string[Symbol.iterator]
+
+generatorObject[Symbol.iterator]
+
+object[Symbol.iterator] = function* () {
+    yield this
+}
+
+console.log([...object])
+
+
