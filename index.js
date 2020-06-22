@@ -8,22 +8,22 @@ function normalFunction(){
 console.log(normalFunction());
 
 
-function* genFunc(){
-    yield 'STARS'
-    console.log('First Log!')
-    yield 'HEARTS'
-    console.log('Second Log!')
-    return 'Done!'
-}
+// function* genFunc(){
+//     yield 'STARS'
+//     console.log('First Log!')
+//     yield 'HEARTS'
+//     console.log('Second Log!')
+//     return 'Done!'
+// }
 
-console.log(genFunc());
+// console.log(genFunc());
 
-const genObj = genFunc()
+// const genObj = genFunc()
 
-console.log(genObj.next())
-console.log(genObj.next())
-console.log(genObj.next())
-console.log(genObj.next())
+// console.log(genObj.next())
+// console.log(genObj.next())
+// console.log(genObj.next())
+// console.log(genObj.next())
 
 function* getSpread(){
     yield "Twon"
@@ -59,6 +59,23 @@ object[Symbol.iterator] = function* () {
     yield this
 }
 
+// object[Symbol.iterator] = function* () {
+//     yield Object.keys(this)
+// }
+
 console.log([...object])
 
+console.log(Object.keys(object))
 
+const emojis = ['#', '!']
+
+function* genFunc1(){
+    yield 'Å'
+    yield* emojis
+    yield 'Ê'
+}
+
+const genObj = genFunc1()
+
+
+console.log(...genObj)
